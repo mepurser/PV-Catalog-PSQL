@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+      <meta charset="utf-8">
+      <title>Rooftop PV Equipment Project</title>
+
+      <meta name="viewport" content="width=device-width height=device-height">
+    </head>
+
+    <body>
+        <div class="container">
+            
+            <div class='row'>
+              
+              <div class='col-sm-12'>
+                <a href='/pv_equipment/{{curCategory.id}}/'>
+                  Home
+                  <br>
+                  <br>
+                </a>
+                <h1>Add Brands</h1>
+              </div>
+            
+            </div>
+
+            <div class='row'>
+
+              <div class='col-sm-12'>
+                <h4>Current category:</h4>
+                <h2>{{curCategory.name}}</h2><br>
+                <ul class="list-unstyled">
+                  {% for i in brands %}
+                    <li>
+                      {{i.name}}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            
+            </div>
+                
+                <hr>
+
+            <div class='row'>
+
+                <form action='{{ url_for('newBrand',category_id=curCategory.id) }}' method="POST" class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-sm-2 control-label">Brand</label>
+                    <div class="col-sm-3">
+                      <input type='text' class='form-control' name='name' id='inputBrandName'>
+                    </div>
+                    <div class="col-sm-7">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDesc" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                      <input type='text' class='form-control' rows='3' name='description' id='inputDesc'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              
+            </div>
+        
+        </div>
+    </body>
+</html>
