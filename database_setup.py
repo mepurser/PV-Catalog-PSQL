@@ -4,6 +4,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+#import psycopg2
 
 Base = declarative_base()
 
@@ -36,6 +37,7 @@ class EquipBrand(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship(User)
 
-engine = create_engine('sqlite:///pv_equipment.db')
+databaseName = 'pvequipment'
+engine = create_engine('postgresql+psycopg2://catalog:catalog@localhost/' + databaseName)
 
 Base.metadata.create_all(engine)

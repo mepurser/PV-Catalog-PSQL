@@ -1,5 +1,5 @@
 import os, random, string, json, requests, httplib2
-
+#import psycopg2
 from flask import Flask, render_template, request, make_response, redirect, jsonify, url_for, flash
 
 #'session' is already used as db session, so renaming
@@ -19,8 +19,8 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'PV Equipment App'
 
-databaseName = 'pv_equipment.db'
-engine = create_engine('sqlite:///' + databaseName)
+databaseName = 'pvequipment'
+engine = create_engine('postgresql+psycopg2://catalog:catalog@localhost/' + databaseName)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -458,10 +458,9 @@ def pvEquipment():
             userIsLoggedIn=userIsLoggedIn, 
             user_id='')
 
-if not(os.path.exists(databaseName)):
-    database_initdata.py
-    print('db initialized')
-else:
+try:
+    print('trying to connect')
+    engine.connect()
     print('db exists')
     firstEntry = session.query(EquipCategory).first()
     if not(firstEntry):
@@ -469,6 +468,9 @@ else:
         import database_initdata
     else:
         print('db has data')
+except:
+    import database_initdata
+    print('db initialized')
 
 
 
