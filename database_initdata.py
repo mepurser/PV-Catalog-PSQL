@@ -15,7 +15,7 @@ def addItem(entry):
 	session.commit()
 
 # initial user data
-user1 = User(name='purser.mark', email='purser.mark@gmail.com', id=1)
+user1 = User(name='Mark Purser', email='purser.mark@gmail.com', id=1)
 addItem(user1)
 
 # initial equipment category data
@@ -27,7 +27,6 @@ addItem(equipCat3)
 
 equipCat2 = EquipCategory(name="Bracketing", user_id=1, id=3)
 addItem(equipCat2)
-
 
 
 # initial brand data
@@ -58,6 +57,13 @@ addItem(equipBrand8)
 equipBrand9 = EquipBrand(name="Railless", category_id=3, description='SunEdison-made railless system', user_id=1)
 addItem(equipBrand9)
 
-
+# unlike sqlite, postgresql seems to struggle with auto-incrementing the primary key.
+# queries below are designed to address this.
+sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 2;'
+engine.execute(sql)
+sql = 'ALTER SEQUENCE equip_category_id_seq RESTART WITH 4;'
+engine.execute(sql)
+sql = 'ALTER SEQUENCE equip_brand_id_seq RESTART WITH 10;'
+engine.execute(sql)
 
 print("since empty, added initial equipment/brands!")

@@ -447,6 +447,7 @@ def pvEquipment():
     userIsLoggedIn = False
     if 'username' in login_session:
         userIsLoggedIn = True
+        print('username is: ' + login_session['username'])
         user = session.query(User).filter_by(name=login_session['username']).one()
         return render_template('index.html', 
             categories=categories, 
@@ -463,15 +464,14 @@ try:
     engine.connect()
     print('db exists')
     firstEntry = session.query(EquipCategory).first()
-    if not(firstEntry):
-        print('db is empty')
-        import database_initdata
-    else:
-        print('db has data')
 except:
     import database_initdata
     print('db initialized')
-
+if not firstEntry:
+    print('db is empty')
+    import database_initdata
+else:
+    print('db has data')
 
 
 # for local execution, set debug mode and local port
