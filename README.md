@@ -10,7 +10,7 @@ http://ec2-52-10-151-247.us-west-2.compute.amazonaws.com
 
 ##3) Summary of software installed and configurations made
 ### Updated all packages
-$sudo apt-get update
+$sudo apt-get update  
 $sudo apt-get upgrade
 ### Allow packages to auto-update
 $sudo apt-get install -y unattended-upgrades  
