@@ -16,7 +16,7 @@ from database_setup import Base, EquipCategory, EquipBrand, User
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/home/grader/PV-Catalog-PSQL/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'PV Equipment App'
 
 databaseName = 'pvequipment'
@@ -31,7 +31,11 @@ session = scoped_session(DBSession)
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    print 'state is:'
+    print state
     login_session['state'] = state
+    print 'set login_session var'
+    print login_session['state']
     return render_template('login.html', STATE=state)
 
 @app.route('/gconnect', methods=['POST'])
@@ -46,7 +50,7 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/home/grader/PV-Catalog-PSQL/client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
@@ -475,7 +479,7 @@ else:
 
 
 # for local execution, set debug mode and local port
-if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
-    app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+#if __name__ == '__main__':
+app.secret_key = 'super_secret_key'
+app.debug = False
+#app.run(host='0.0.0.0', port=8000)
